@@ -179,7 +179,7 @@ if "$cygwin" || "$msys" ; then
         if
             case $arg in                                #(
               -*)   false ;;                            # don't mess with options #(
-              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
+              /?)  t=${arg#/} t=/${t%%/}              # looks like a POSIX filepath
                     [ -e "$t" ] ;;                      #(
               *)    false ;;
             esac
@@ -190,9 +190,9 @@ if "$cygwin" || "$msys" ; then
         # args, so each arg winds up back in the position where it started, but
         # possibly modified.
         #
-        # NB: a `for` loop captures its iteration list before it begins, so
+        # NB: a for loop captures its iteration list before it begins, so
         # changing the positional parameters here affects neither the number of
-        # iterations, nor the values presented in `arg`.
+        # iterations, nor the values presented in arg.
         shift                   # remove old arg
         set -- "$@" "$arg"      # push replacement arg
     done
