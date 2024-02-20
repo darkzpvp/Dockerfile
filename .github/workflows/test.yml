@@ -1,0 +1,48 @@
+name: java ci with gradle
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: download repo
+        uses: actions/checkout@v4
+      - name: set up jdk 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: setup gradle
+        uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a
+      - name: make gradlew executable
+        run: chmod +x ./gradlew
+      - name: build with gradle wrapper
+        run: ./gradlew build
+
+  # --------------------------------------------------------------------------------------------------------
+
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: download repo
+        uses: actions/checkout@v4
+      - name: set up jdk 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: setup gradle
+        uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a
+      - name: make gradlew executable
+        run: chmod +x ./gradlew
+      - name: build with gradle wrapper
+        run: ./gradlew test
